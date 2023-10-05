@@ -1,0 +1,55 @@
+buildscript {
+    ext.kotlin_version = '1.6.10' // You can change this to the desired Kotlin version
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.0' // Update to the latest Gradle version if needed
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+def flutterRoot = rootProject.projectDir.parent.toPath() // Find the Flutter project root
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+android {
+    compileSdkVersion 30 // Use the SDK version you have installed
+    buildToolsVersion "30.0.3" // Use the appropriate build tools version
+
+    defaultConfig {
+        applicationId "com.example.flutter_catalog" // Replace with your app's package name
+        minSdkVersion 16
+        targetSdkVersion 30 // Use the same SDK version as compileSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    buildTypes {
+        release {
+            // Configure signing for release builds if needed
+            // signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+flutter {
+    source '../..' // Relative path to the Flutter module
+}
+
+dependencies {
+    // Add your Android dependencies here if needed
+}
